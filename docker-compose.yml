@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  mongo_db:
+     container_name: db_container
+     image: mongo:lastest
+     restart: always
+     ports:
+       - 27017
+     volumes:
+       - mongo_db:/data/db
+
+  api:
+   build: .
+   ports:
+      - 8081:8081
+   volumes:
+     - .:/src/app
+   environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: Project 0
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 1234
+      ME_CONFIG_MONGODB_URL: 'mongodb+srv://arqsi2022:1234@atlascluster.umvbd2k.mongodb.net/?retryWrites=true&w=majority'
+   depends_on:
+    - mongo_db
+
+volumes:
+ mongo_db: {}
+
+
